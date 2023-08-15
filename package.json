@@ -29,6 +29,7 @@
     "@prisma/client": "5.1.1",
     "dotenv-cli": "7.2.1",
     "nestjs-prisma": "0.22.0",
+    "prisma-paginate": "5.1.1",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.8.1"
   },
@@ -73,8 +74,8 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@backend/(.*)$": "<rootDir>/$1",
-      "^@test/(.*)$": "<rootDir>/test/$1"
+      "@backend/(.*)$": "<rootDir>/$1",
+      "@test/(.*)$": "<rootDir>/test/$1"
     }
   }
 }
