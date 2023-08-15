@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:15.3-alpine3.18    
+    container_name: postgres.nestjs-backend
+    hostname: postgres.nestjs-backend
+    restart: unless-stopped
+    command: -p $POSTGRES_PORT
+    privileged: true
+    user: root
+    ports:
+      - '$POSTGRES_PORT:$POSTGRES_PORT'
+    volumes:
+      - .databases/postgresql/data:/var/lib/postgresql/data
+    env_file:
+      - .env
