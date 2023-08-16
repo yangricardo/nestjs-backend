@@ -1,0 +1,109 @@
+openapi: 3.0.0
+paths:
+  /api/users:
+    get:
+      operationId: pageUsers
+      summary: pageUsers
+      description: Page Users
+      parameters:
+        - name: page
+          required: true
+          in: query
+          description: page
+          schema:
+            default: 1
+            type: number
+        - name: limit
+          required: true
+          in: query
+          description: limit
+          schema:
+            default: 10
+            type: number
+      responses:
+        "200":
+          description: Page Users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageUserResultDTO"
+      tags:
+        - users
+info:
+  title: nestjs-backend
+  description: NestJS Backend based API with Prisma ORM and Postgres to try
+    implement good practices and patterns
+  version: 0.0.1
+  contact: {}
+tags:
+  - name: users
+    description: ""
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    PageUserResultDTO:
+      description: User Page Result
+      type: object
+      properties:
+        result:
+          description: Result List
+          type: array
+          items:
+            description: User Data
+            type: object
+            properties:
+              id:
+                description: User id
+                type: string
+                format: cuid
+              name:
+                description: User name
+                type: string
+              email:
+                description: User email
+                type: string
+                format: email
+            required:
+              - id
+              - name
+              - email
+        totalPages:
+          description: Total Pages
+          type: number
+        hasNextPage:
+          description: Has next page?
+          type: boolean
+        hasPrevPage:
+          description: Has previous page?
+          type: boolean
+        count:
+          description: The total count of the results
+          type: number
+        exceedCount:
+          description: Exceed count?
+          type: boolean
+        exceedTotalPages:
+          description: Exceed total pages?
+          type: boolean
+        page:
+          description: The current page number
+          type: number
+        limit:
+          description: The limit of the results
+          type: number
+      required:
+        - result
+        - totalPages
+        - hasNextPage
+        - hasPrevPage
+        - count
+        - exceedCount
+        - exceedTotalPages
+        - page
+        - limit
