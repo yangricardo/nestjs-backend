@@ -22,6 +22,9 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": false,    
+    "noFallthroughCasesInSwitch": false,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false
   }
 }
