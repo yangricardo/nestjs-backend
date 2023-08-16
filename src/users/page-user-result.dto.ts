@@ -1,27 +1,41 @@
+import { PageResultDTO, PageResultSchema } from "@backend/page-result.dto";
 import { ApiProperty } from "@nestjs/swagger";
 import { createZodDto } from "nestjs-zod";
 import { z } from "nestjs-zod/z";
 
-export const PageResultSchema = z.object({
-  result: z.array(z.any()),
-  nextPage: z.function(),
-  totalPages: z.number(),
-  hasNextPage: z.boolean(),
-  hasPrevPage: z.boolean(),
-  count: z.number(),
-  exceedCount: z.boolean(),
-  exceedTotalPages: z.boolean(),
-  page: z.number(),
-  limit: z.number(),
+export const UserSchema = z.object({
+  id: z.string().cuid(),
+  name: z.string(),
+  email: z.string().email(),
 })
 
 
-export class PageResultDTO<T=any> extends createZodDto(PageResultSchema) /* implements IPaginationResult  */ {
+export class UserDTO extends createZodDto(UserSchema) {
   @ApiProperty({
-    description: 'The result of the query',
-    type: [Object],
+    description: 'User id',
   })
-  result: T[];
+  id: string;
+  @ApiProperty({
+    description: 'User name',
+  })
+  name: string;
+  @ApiProperty({
+    description: 'User email',
+  })
+  email: string;
+}
+
+
+export const PageUserResultSchema = PageResultSchema.extend({
+  result: z.array(UserDTO.schema),
+})
+
+export class PageUserResultDTO extends createZodDto(PageUserResultSchema) implements PageResultDTO<UserDTO>{
+  @ApiProperty({
+    description: 'User result list',
+    type: [UserDTO],
+  })
+  result: UserDTO[];
   @ApiProperty({
     description: 'The next page number',
     type: Number,

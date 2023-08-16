@@ -1,7 +1,8 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PageUserQueryDTO } from './page-user-query.dto';
 import { UsersService } from './users.service';
 import { Controller, Get, Query } from '@nestjs/common';
+import { PageUserResultDTO } from './page-user-result.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -16,9 +17,16 @@ export class UsersController {
     summary: 'pageUsers',
     operationId: 'pageUsers'
   })
+  @ApiOkResponse({
+    description: 'Page Users',
+    type: PageUserResultDTO
+  })
   async pageUsers(
     @Query() query: PageUserQueryDTO
   ) {
-    return await this.usersService.pageUsers(query.page,query.limit);
+    const result = PageUserResultDTO.schema.parse(
+      await this.usersService.pageUsers(query.page,query.limit)
+    );
+    return result;
   }
 }
