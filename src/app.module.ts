@@ -4,6 +4,9 @@ import { AppService } from '@backend/app.service';
 import { PrismaModule, loggingMiddleware,  } from 'nestjs-prisma';
 import { ConfigModule } from '@nestjs/config';
 import { loadAppEnv } from './app.env';
+import { UsersModule } from './users/users.module';
+import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 
 @Module({
   imports: [
@@ -27,8 +30,19 @@ import { loadAppEnv } from './app.env';
         ],
       },
     }),
+    UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,            
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ZodSerializerInterceptor,
+    },
+    AppService
+  ],
 })
 export class AppModule {}
