@@ -27,6 +27,7 @@ async function bootstrap() {
     .setVersion(packageJson.version)
     .addBearerAuth()
     .addServer(`http://${env.HOST}:${env.PORT}`)
+    .addTag('users')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);
