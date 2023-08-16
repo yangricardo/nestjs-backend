@@ -5,10 +5,12 @@ import { HttpStatus, Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as packageJson from '../package.json';
 import { PrismaClientExceptionFilter } from 'nestjs-prisma';
+import { patchNestJsSwagger } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('bootstrap');
+  app.setGlobalPrefix('api');
 
   // Prisma Client Exception Filter for unhandled exceptions
   const { httpAdapter } = app.get(HttpAdapterHost);
@@ -26,10 +28,11 @@ async function bootstrap() {
     .setDescription(packageJson.description)
     .setVersion(packageJson.version)
     .addBearerAuth()
-    .addServer(`http://${env.HOST}:${env.PORT}`)
-    .addTag('users')
+    .addServer(`http://${env.HOST}:${env.PORT}`)    
+    .addTag('users')    
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  patchNestJsSwagger();
+  const document = SwaggerModule.createDocument(app, config);  
   SwaggerModule.setup('/', app, document);
 
   await app.listen(env.PORT, env.HOST, () => {

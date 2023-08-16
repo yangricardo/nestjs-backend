@@ -3,6 +3,7 @@ import { PageUserQueryDTO } from './page-user-query.dto';
 import { UsersService } from './users.service';
 import { Controller, Get, Query } from '@nestjs/common';
 import { PageUserResultDTO } from './page-user-result.dto';
+import { UseZodGuard } from 'nestjs-zod';
 
 @Controller('users')
 @ApiTags('users')
@@ -15,8 +16,9 @@ export class UsersController {
   @ApiOperation({
     description: 'Page Users',
     summary: 'pageUsers',
-    operationId: 'pageUsers'
+    operationId: 'pageUsers',    
   })
+  @UseZodGuard('query',PageUserQueryDTO)
   @ApiOkResponse({
     description: 'Page Users',
     type: PageUserResultDTO
