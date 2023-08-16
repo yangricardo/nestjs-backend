@@ -11,16 +11,17 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@backend/*": ["src/*"]
+      "@backend/*": ["src/*"],
+      "@test/*": ["test/*"]
     },
     "strict": true,
     "resolveJsonModule": true,
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,    
   }
 }
