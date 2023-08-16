@@ -2,9 +2,15 @@ import { Logger, Module } from '@nestjs/common';
 import { AppController } from '@backend/app.controller';
 import { AppService } from '@backend/app.service';
 import { PrismaModule, loggingMiddleware,  } from 'nestjs-prisma';
+import { ConfigModule } from '@nestjs/config';
+import { loadAppEnv } from './app.env';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load:[loadAppEnv]
+    }),
     PrismaModule.forRoot({
       isGlobal: true,
       prismaServiceOptions: {

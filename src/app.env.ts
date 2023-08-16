@@ -9,7 +9,7 @@ export const AppEnvSchema = z.object({
   DATABASE_URL: z
     .string()
     .url()
-    .default('postgres://postgres:postgres@localhost:5432/postgres'),
+    .startsWith('postgresql://'),
 });
 
 export class AppEnv extends createZodDto(AppEnvSchema) {}
